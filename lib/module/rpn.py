@@ -28,7 +28,7 @@ class RPN(nn.Module):
         # prediction
         pred_cls_score_list = []
         pred_bbox_offsets_list = []
-        batch=features[0].shape
+        batch=features[0].shape[0]
         print(batch)
         for x in features:
             t = F.relu(self.rpn_conv(x))
