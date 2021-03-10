@@ -32,7 +32,7 @@ class RPN(nn.Module):
         
         for x in features:
             t = F.relu(self.rpn_conv(x))
-            print(self.rpn_cls_score(t).shape)
+         
             pred_cls_score_list.append(self.rpn_cls_score(t))
             pred_bbox_offsets_list.append(self.rpn_bbox_offsets(t))
         # get anchors
