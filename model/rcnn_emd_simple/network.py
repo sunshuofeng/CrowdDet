@@ -44,8 +44,11 @@ class Network(nn.Module):
         return loss_dict
 
     def _forward_test(self, image, im_info):
+        print(image.shape)
         fpn_fms = self.FPN(image)
+        print(fpn_fms.shape)
         rpn_rois = self.RPN(fpn_fms, im_info)
+        print(rpn_rois.shape)
         pred_bbox = self.RCNN(fpn_fms, rpn_rois)
         return pred_bbox.cpu().detach()
 
@@ -76,16 +79,16 @@ class RCNN(nn.Module):
         fpn_fms = fpn_fms[1:][::-1]
         stride = [4, 8, 16, 32]
         pool_features = roi_pooler(fpn_fms, rcnn_rois, stride, (7, 7), "ROIAlignV2")
-        print(pool_features.shape)
+       
         flatten_feature = torch.flatten(pool_features, start_dim=1)
-        print(pool_features.shape)
+        
         flatten_feature = F.relu_(self.fc1(flatten_feature))
         flatten_feature = F.relu_(self.fc2(flatten_feature))
         pred_emd_cls_0 = self.emd_pred_cls_0(flatten_feature)
         pred_emd_delta_0 = self.emd_pred_delta_0(flatten_feature)
         pred_emd_cls_1 = self.emd_pred_cls_1(flatten_feature)
         pred_emd_delta_1 = self.emd_pred_delta_1(flatten_feature)
-        print(pred_emd_cls_0.shape)
+        
         print(pred_emd_delta_0.shape)
         if self.training:
             loss0 = emd_loss_softmax(
