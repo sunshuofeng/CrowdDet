@@ -8,12 +8,12 @@ from torchvision.ops import nms
 
 @torch.no_grad()
 def find_top_rpn_proposals(is_train, rpn_bbox_offsets_list, rpn_cls_prob_list,
-        all_anchors_list, im_info):
+        all_anchors_list, im_info,batches):
     prev_nms_top_n = config.train_prev_nms_top_n \
         if is_train else config.test_prev_nms_top_n
     post_nms_top_n = config.train_post_nms_top_n \
         if is_train else config.test_post_nms_top_n
-    batch_per_gpu = config.train_batch_per_gpu if is_train else 1
+    batch_per_gpu = batches
     nms_threshold = config.rpn_nms_threshold
     box_min_size = config.rpn_min_box_size
     bbox_normalize_targets = config.rpn_bbox_normalize_targets
