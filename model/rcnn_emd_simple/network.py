@@ -83,6 +83,8 @@ class RCNN(nn.Module):
         pred_emd_delta_0 = self.emd_pred_delta_0(flatten_feature)
         pred_emd_cls_1 = self.emd_pred_cls_1(flatten_feature)
         pred_emd_delta_1 = self.emd_pred_delta_1(flatten_feature)
+        print(pred_emd_cls_0.shape)
+        print(pred_emd_delta_0.shape)
         if self.training:
             loss0 = emd_loss_softmax(
                         pred_emd_delta_0, pred_emd_cls_0,
