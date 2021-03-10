@@ -50,7 +50,7 @@ class Network(nn.Module):
         rpn_rois,shapes = self.RPN(fpn_fms, im_info)
         
         pred_bbox = self.RCNN(fpn_fms, rpn_rois)
-        return pred_bbox.cpu().detach()
+        return pred_bbox.cpu().detach(),shapes
 
 class RCNN(nn.Module):
     def __init__(self):
