@@ -23,7 +23,7 @@ def find_top_rpn_proposals(is_train, rpn_bbox_offsets_list, rpn_cls_prob_list,
 
     return_rois = []
     return_inds = []
-    shapes=[
+    shapes=[]
     for bid in range(batch_per_gpu):
         batch_proposals_list = []
         batch_probs_list = []
