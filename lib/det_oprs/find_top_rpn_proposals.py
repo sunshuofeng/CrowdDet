@@ -23,6 +23,7 @@ def find_top_rpn_proposals(is_train, rpn_bbox_offsets_list, rpn_cls_prob_list,
 
     return_rois = []
     return_inds = []
+    shapes=[
     for bid in range(batch_per_gpu):
         batch_proposals_list = []
         batch_probs_list = []
@@ -67,9 +68,11 @@ def find_top_rpn_proposals(is_train, rpn_bbox_offsets_list, rpn_cls_prob_list,
         batch_inds = torch.ones(batch_proposals.shape[0], 1).type_as(batch_proposals) * bid
         batch_rois = torch.cat([batch_inds, batch_proposals], axis=1)
         return_rois.append(batch_rois)
+        shapes.append(batch_rois.shape[0])
+        
 
     if batch_per_gpu == 1:
         return batch_rois
     else:
         concated_rois = torch.cat(return_rois, axis=0)
-        return concated_rois
+        return concated_rois,shapes
