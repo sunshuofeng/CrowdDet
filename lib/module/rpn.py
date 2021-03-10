@@ -44,7 +44,7 @@ class RPN(nn.Module):
             off_stride = off_stride // 2
             all_anchors_list.append(layer_anchors)
         # sample from the predictions
-        rpn_rois = find_top_rpn_proposals(
+        rpn_rois,shapes = find_top_rpn_proposals(
                 self.training, pred_bbox_offsets_list, pred_cls_score_list,
                 all_anchors_list, im_info)
         rpn_rois = rpn_rois.type_as(features[0])
@@ -73,5 +73,5 @@ class RPN(nn.Module):
             loss_dict['loss_rpn_loc'] = loss_rpn_loc
             return rpn_rois, loss_dict
         else:
-            return rpn_rois
+            return rpn_rois,shapes
 
