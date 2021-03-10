@@ -28,7 +28,8 @@ class RPN(nn.Module):
         # prediction
         pred_cls_score_list = []
         pred_bbox_offsets_list = []
-        
+        batch=features[0].shape
+        print(batch)
         for x in features:
             t = F.relu(self.rpn_conv(x))
             print(self.rpn_cls_score(t).shape)
@@ -46,7 +47,7 @@ class RPN(nn.Module):
         # sample from the predictions
         rpn_rois,shapes = find_top_rpn_proposals(
                 self.training, pred_bbox_offsets_list, pred_cls_score_list,
-                all_anchors_list, im_info)
+                all_anchors_list, im_info,batch)
         rpn_rois = rpn_rois.type_as(features[0])
         if self.training:
             rpn_labels, rpn_bbox_targets = fpn_anchor_target(
