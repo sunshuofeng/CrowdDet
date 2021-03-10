@@ -49,8 +49,7 @@ class Network(nn.Module):
         for i in fpn_fms:
             print(i.shape)
         rpn_rois = self.RPN(fpn_fms, im_info)
-        for i in rpn_rois:
-            print(i.shape)
+        print(rpn_rois.shape)
         pred_bbox = self.RCNN(fpn_fms, rpn_rois)
         return pred_bbox.cpu().detach()
 
