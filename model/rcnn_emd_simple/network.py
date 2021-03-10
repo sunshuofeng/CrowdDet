@@ -46,10 +46,9 @@ class Network(nn.Module):
     def _forward_test(self, image, im_info):
         print(image.shape)
         fpn_fms = self.FPN(image)
-        for i in fpn_fms:
-            print(i.shape)
+        
         rpn_rois = self.RPN(fpn_fms, im_info)
-        print(rpn_rois.shape)
+        
         pred_bbox = self.RCNN(fpn_fms, rpn_rois)
         return pred_bbox.cpu().detach()
 
