@@ -47,8 +47,8 @@ class Network(nn.Module):
         print(image.shape)
         fpn_fms = self.FPN(image)
         
-        rpn_rois = self.RPN(fpn_fms, im_info)
-        
+        rpn_rois,shapes = self.RPN(fpn_fms, im_info)
+        print(shapes)
         pred_bbox = self.RCNN(fpn_fms, rpn_rois)
         return pred_bbox.cpu().detach()
 
