@@ -40,9 +40,8 @@ class Network(nn.Module):
         else:
             #pred_bbox = union_inference(
             #        anchors_list, pred_cls_list, pred_reg_list, im_info)
-            pred_bbox = per_layer_inference(
-                    anchors_list, pred_cls_list, pred_reg_list, im_info)
-            return pred_bbox.cpu().detach()
+           
+            return anchors_list,pred_cls_list,pred_reg_list,im_info
 
 class RetinaNet_Anchor():
     def __init__(self):
