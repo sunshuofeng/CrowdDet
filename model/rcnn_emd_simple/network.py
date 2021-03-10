@@ -76,7 +76,9 @@ class RCNN(nn.Module):
         fpn_fms = fpn_fms[1:][::-1]
         stride = [4, 8, 16, 32]
         pool_features = roi_pooler(fpn_fms, rcnn_rois, stride, (7, 7), "ROIAlignV2")
+        print(pool_features.shape)
         flatten_feature = torch.flatten(pool_features, start_dim=1)
+        print(pool_features.shape)
         flatten_feature = F.relu_(self.fc1(flatten_feature))
         flatten_feature = F.relu_(self.fc2(flatten_feature))
         pred_emd_cls_0 = self.emd_pred_cls_0(flatten_feature)
