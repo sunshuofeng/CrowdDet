@@ -118,12 +118,15 @@ class RCNN(nn.Module):
             base_rois = rcnn_rois[:, 1:5].repeat(1, class_num).reshape(-1, 4)
             pred_bbox_0 = restore_bbox(base_rois, pred_delta_0, True)
             pred_bbox_1 = restore_bbox(base_rois, pred_delta_1, True)
-            print(pred_bbox_0.shape)
-            print(pred_scores_0.shape)
-            print(tag.shape)
+            print('origin_bbox{}'.format(pred_bbox_0.shape))
+            print('origin_bbox1:{}'.format(pred_bbox_1.shape))
+            print('origin_score:{}'.format(pred_scores_0.shape))
+            print('tag:{}'.format(tag.shape))
             pred_bbox_0 = torch.cat([pred_bbox_0, pred_scores_0, tag], axis=1)
-            print(pred_bbox_0.shape)
+            
             pred_bbox_1 = torch.cat([pred_bbox_1, pred_scores_1, tag], axis=1)
+            print(pred_bbox_0.shape)
+            print(pred_bbox_1.shape)
             pred_bbox = torch.cat((pred_bbox_0, pred_bbox_1), axis=1)
             return pred_bbox
 
